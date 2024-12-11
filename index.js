@@ -10,21 +10,6 @@ app.use('/public', express.static(process.cwd() + '/public'));
 
 const upload = multer({ dest: 'uploads/' })
 
-app.post('/api/fileanalyse2',upload.single('upfile') ,function (req, res) {
-  //res.send('Bien!');
-  const file = req.file;
-  if (!file) { 
-    return res.status(400).json({ error: 'No file uploaded' }); 
-  }
-  // Crear los metadatos del archivo
-  const fileMetadata = { 
-    name: file.originalname,
-    type: file.mimetype,
-    size: file.size
-  };
-  // Devolver los metadatos  JSON 
-  res.json(fileMetadata);
-});
 app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => { 
   try {
     res.json({
