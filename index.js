@@ -8,16 +8,7 @@ var app = express();
 app.use(cors());
 app.use('/public', express.static(process.cwd() + '/public'));
 
-// Configuración de Multer
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => { 
-      cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => { 
-      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
-});
-const upload = multer({ storage: storage });
+const upload = multer({ dest: 'uploads/' })
 
 app.post('/api/fileanalyse2',upload.single('upfile') ,function (req, res) {
   //res.send('Bien!');
