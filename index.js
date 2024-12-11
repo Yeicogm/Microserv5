@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-app.post('/api/fileanalyse',upload.single('upfile') ,function (req, res) {
+app.post('/api/fileanalyse2',upload.single('upfile') ,function (req, res) {
   //res.send('Bien!');
   const file = req.file;
   if (!file) { 
@@ -33,6 +33,18 @@ app.post('/api/fileanalyse',upload.single('upfile') ,function (req, res) {
   };
   // Devolver los metadatos  JSON 
   res.json(fileMetadata);
+});
+app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => { 
+  try {
+    res.json({
+      "name": req.file.originalname,
+      "type": req.file.mimetype,
+      "size": req.file.size
+    });
+  } 
+  catch (err) {
+    res.send(400);
+  }
 });
 
 app.get('/', function (req, res) {
